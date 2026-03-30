@@ -873,7 +873,10 @@ The HTML content is taken from the rendered HTML post."
    "<item>\n"
    "  <title><![CDATA[" (org-static-blog-get-title post-filename) "]]></title>\n"
    "  <description><![CDATA["
-   (org-static-blog-get-post-content post-filename t) ; exclude headline!
+   (replace-regexp-in-string
+    "<nav id=\"table-of-contents\"[^>]*>\\(.\\|\n\\)*?</nav>\n?" ""
+    (org-static-blog-get-post-content post-filename t) ; exclude headline!
+    nil t)
    "]]></description>\n"
    (let ((categories ""))
      (when (and (org-static-blog-get-tags post-filename) org-static-blog-enable-tags)
